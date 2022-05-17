@@ -1,0 +1,168 @@
+        <!DOCTYPE html>
+        <!DOCTYPE html>
+        <html>
+        <head>
+        	<meta http-equiv="Content-Type" content="charset=utf-8">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"> 
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous"> 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        	<meta name="viewport" content="width=device-width, initial-scale=1">
+        	<title></title>
+            <style type="text/css">
+                body{
+                    max-width: 1200px;
+                    margin: auto;
+                }
+                div{
+                    z-index: 1;
+                }
+                div.st1{
+                    padding-top:0px;
+                    padding-left:40% ;
+                    float:left ;
+                    padding-bottom: 10px;
+                }
+                div.st2{
+                    background-color:white; 
+                    height: 210px;
+                    padding-left: 0px;
+                    margin-bottom:10px;
+                    margin-left:0px ;
+                    padding-right:-10px ;
+                    font-size:15px ;
+
+                }
+                img.st3{
+                    height: 100%;
+                    width: 100%;
+                }
+                div.st4{
+                    position: absolute;
+                    z-index:3;
+                    top: 70px;
+                    left: 60px;
+                    width: 90%;
+                    max-height: 200px;
+                    background-color: white;
+                    margin: auto;
+                }
+                div.bgss{  
+                    top: 0px;
+                    left: -16px;
+                    position: absolute;
+                    width:102.8%;
+                    height: 100%;
+                    background-color: rgb(215, 219, 216);
+                    opacity: 0.6;https://www.rts.ch/info/monde/12656412-a-rotterdam-la-police-a-tire-a-balles-reelles-lors-demeutes-contre-les-restrictions-sanitaires.html
+                    z-index:2;
+                }
+                div.bgss1{
+                    height: 300px;
+                }
+
+              @media only screen and (max-width: 768px)
+            {
+                [class*="col-"] {
+                width: 100%;}
+                div{
+                    padding-left: 15px;
+                    overflow: auto;
+                }
+            }
+        </style>
+        </head>
+        <body >
+        <div style="position:relative ;">
+        <div style="height: 40px; background-color:rgb(232, 129, 65); "class="row">
+        <div class="st1"  ><p style="font-weight: bold; font-size: 30px;" id="mynews" >My News</p></div> 
+        <div class="st1" style="padding-left: 4px;" ><p id="search" ><span class="glyphicon glyphicon-search " style="font-size: 30px;" ></span></p></div>
+        </div >
+        <div id="ssss" style="clear: left;">
+
+        </div>
+        <!--<div><p>a<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<br>s<</p></div>-->
+        <div  class="st4" style="display: none;">
+
+            <label style="padding:30px 5px 30px 10px;" for="keys"> Keywords: </label>
+            <input type="text" id="keys" name="keys">
+            <button id="btseaarch" > Search</button>
+
+            <p style="float: right; padding-top: 20px; padding-right: 15px;" class="btx">x</p>
+            
+        </div>
+        <div class="bgss" style="display:none;"></div>
+        </div>
+        <script type="text/javascript">
+            
+             var urlx= ("https://gnews.io/api/v4/top-headlines?&token=2866fbcb4d24d66a04462769104a547b");
+            dataa(urlx);
+            $(document).ready(function(){
+                
+                $("#mynews").click(function(){
+                urlx ="https://gnews.io/api/v4/top-headlines?&token=2866fbcb4d24d66a04462769104a547b";
+                 dataa(urlx);
+
+               });
+
+                $("#search").click(function(){
+                    $(".st4").show(); 
+                    $(".bgss").show(); 
+                $(".btx").click(function(){
+                    $(".st4").hide();
+                    $(".bgss").hide(); 
+                    $("#keys").val("");
+                  
+                });
+           
+                
+                $("#btseaarch").click(function(){
+                    var xxx =$("#keys").val();
+                    $(".bgss").hide();
+                    $(".st4").hide(); 
+                   $("#keys").val("");
+                 urlx =("https://gnews.io/api/v4/search?q=")+xxx+("&token=2866fbcb4d24d66a04462769104a547b");
+                 dataa(urlx);   
+                });
+                
+               });
+
+            });
+
+            function dataa(xx){
+           $(document).ready(function(){
+           $("#ssss").empty();
+           $.getJSON(xx,function(data) 
+             {
+            const m=data.totalArticles;
+            var s=4;
+            if(m >=4)
+            {
+                $(".bgss").removeClass("bgss1");
+                s=4;
+            }
+            else if(m<=4){
+                $(".bgss").removeClass("bgss1");
+                s=m;
+            }
+
+            for (var i=0;i<s;i++)
+            {
+            const x=data.articles[i].image;
+            const y=data.articles[i].url;
+            const z=data.articles[i].title;
+            const t=data.articles[i].publishedAt;
+            const m=data.articles[i].description;
+            var text=("<div class=\"row\">")+("<div class=\"col-md-4 st2\"><image src=\"") +x+("\"")+("class=\"st3\">")+("</div>")+("<div class=\"col-md-8 st2\">")+("<h1><a href=\"")+y+("\" target=\"_blank\">")+z+("</a></h1><p style=\"font-style:italic;\">")+t+("</p><p style=\"font-weight:bold;\">")+m+("</p></div></div>");
+            $("#ssss").append(text);
+            }
+            if (m==0)
+            {
+                $("#ssss").append("<p>khong co ket qua</p>");
+                $(".bgss").addClass("bgss1");
+            }
+             });
+              }); 
+             }
+        </script>
+        </body>
+        </html>
